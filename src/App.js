@@ -1,28 +1,18 @@
-import { Box, styled } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box, Stack } from "@mui/material";
+import Sidebar from "./components/Sidebar";
+import Feed from "./components/Feed";
+import Rightbar from "./components/Rightbar";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const MyButton = styled(Button)({
-    background: "tomato",
-    color: "yellowgreen",
-    margin: 2, // 2 * 8px = 16px
-    "&:hover": {
-      background: "orange",
-    },
-    "&:disabled": {
-      background: "grey",
-      color: "#111",
-    },
-  });
   return (
     <Box>
-      <Button variant="contained" color="primary">
-        primary
-      </Button>
-      <MyButton variant="contained">My button</MyButton>
-      <MyButton variant="contained" disabled>
-        My button
-      </MyButton>
+      <Navbar />
+      <Stack direction={"row"}>
+        <Sidebar />
+        <Feed />
+        <Rightbar />
+      </Stack>
     </Box>
   );
 }
