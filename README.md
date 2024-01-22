@@ -1,4 +1,4 @@
-# social-media demo with Material UI & React JS
+# Social-media demo with Material UI & React JS
 
 Social Media Demo App with Material UI and React JS
 
@@ -123,65 +123,183 @@ body {
 }
 ```
 
-### `npm start`
+## 0210 Material UI Basic Intro
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### sx (prop)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+sx is a prop of Material UI components.  
+In sx, you may write the CSS directly.
 
-### `npm test`
+```javascript
+// Careful : import from "@mui/material"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+import { Box, Button } from "@mui/material";
 
-### `npm run build`
+function App() {
+  return (
+    <Box>
+      <Button
+        variant="contained"
+        sx={{
+          background: "tomato",
+          color: "yellowgreen",
+          margin: 2, // 2 * 8px = 16px
+          "&:hover": {
+            background: "orange",
+          },
+          "&:disabled": {
+            background: "grey",
+            color: "#111",
+          },
+        }}
+      >
+        My button
+      </Button>
+    </Box>
+  );
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+export default App;
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> \* **In css**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+.classA.classB => <div class="classA, classB">~~</div>
+.classA .classB => <div class="classA"><div class="classB">~~</div><div>
+```
 
-### `npm run eject`
+> \* **& of scss**  
+>  & : parent selector of scss
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```javascript
+// scss
+.button {
+  &:visited { }
+  &:hover { }
+  &:active { }
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+// css compiled from upper scss
+  .button:visited { }
+  .button:hover { }
+  .button:active { }
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Custom component
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+styled() method(from "@mui/material") can custimize components.
 
-## Learn More
+```javascript
+import { Box, Button, styled } from "@mui/material";
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+function App() {
+  const MyButton = styled(Button)({
+    background: "tomato",
+    color: "yellowgreen",
+    margin: 2, // 2 * 8px = 16px
+    "&:hover": {
+      background: "orange",
+    },
+    "&:disabled": {
+      background: "grey",
+      color: "#111",
+    },
+  });
+  return (
+    <Box>
+      <MyButton variant="contained">My button</MyButton>
+      <MyButton variant="contained" disabled>
+        My button
+      </MyButton>
+    </Box>
+  );
+}
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export default App;
+```
 
-### Code Splitting
+### Custom theme
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Default Theme of Material UI
 
-### Analyzing the Bundle Size
+> https://mui.com/material-ui/customization/default-theme/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+To customize theme
 
-### Making a Progressive Web App
+- To defined a customized theme in theme.js
+- To apply the theme in root side file such as index.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```javascript
+// [src/theme.js]
 
-### Advanced Configuration
+import { createTheme } from "@mui/material";
+...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#d50000",
+      light: "skyblue",
+    },
+    secondary: {
+      main: "#15c630",
+    },
+    otherColor: {
+      main: "#a1a1a1",
+    },
+  },
+});
 
-### Deployment
+// {src/index.js}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./theme";
 
-### `npm run build` fails to minify
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You may apply the theme in the customized component.
+
+```javascript
+import { Box, styled } from "@mui/material";
+import Button from "@mui/material/Button";
+import { theme } from "./theme";
+
+function App() {
+  const MyButton = styled(Button)(({ theme }) => ({
+    background: theme.palette.otherColor.main,
+    color: "yellowgreen",
+    margin: 2, // 2 * 8px = 16px
+    "&:hover": {
+      background: "orange",
+    },
+    "&:disabled": {
+      background: "grey",
+      color: "#111",
+    },
+  }));
+  return (
+    ...
+  );
+}
+
+export default App;
+
+```
+
+## Reference
+
+Lama Dev  
+https://www.youtube.com/watch?app=desktop&v=fzxEECHnsvU
