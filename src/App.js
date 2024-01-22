@@ -1,10 +1,9 @@
 import { Box, styled } from "@mui/material";
 import Button from "@mui/material/Button";
-import { theme } from "./theme";
 
 function App() {
-  const MyButton = styled(Button)(({ theme }) => ({
-    background: theme.palette.otherColor.main,
+  const MyButton = styled(Button)({
+    background: "tomato",
     color: "yellowgreen",
     margin: 2, // 2 * 8px = 16px
     "&:hover": {
@@ -14,7 +13,7 @@ function App() {
       background: "grey",
       color: "#111",
     },
-  }));
+  });
   return (
     <Box>
       <Button variant="contained" color="primary">
