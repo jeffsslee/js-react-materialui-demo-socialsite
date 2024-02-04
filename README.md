@@ -640,6 +640,101 @@ Upper UI outlook
 
 ![Appbar with search, notification and user](./images_forMD/appbar.PNG)
 
+### Basic Layout : Navbar(Sidebar)
+
+Navbar with List and ListItems
+
+```javascript
+...
+import { Home, Article, Group, Storefront, People, Settings, AccountBox, ModeNight } from "@mui/icons-material";
+
+const Sidebar = () => {
+  return (
+    <Box
+      sx={{
+        // background: "tomato",
+        flex: 1,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Article />
+            </ListItemIcon>
+            <ListItemText primary="Pages" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary="Groups" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Storefront />
+            </ListItemIcon>
+            <ListItemText primary="Marketplace" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <People />
+            </ListItemIcon>
+            <ListItemText primary="Friends" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <AccountBox />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ModeNight />
+            </ListItemIcon>
+            <Switch defaultChecked />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+};
+
+export default Sidebar;
+```
+
+Upper UI outlook
+
+![Appbar with search, notification and user](./images_forMD/navbar-sidebar.png)
+
 ## Reference
 
 Lama Dev  
