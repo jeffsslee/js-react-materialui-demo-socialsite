@@ -125,6 +125,10 @@ body {
 
 ## 0210 Material UI Basic Intro
 
+### Component source (from)
+
+When you import Meterial components, most of them are from <b><span style="color:orange">@mui/material</span></b>.
+
 ### sx (prop)
 
 sx is a prop of Material UI components.  
@@ -298,6 +302,448 @@ function App() {
 export default App;
 
 ```
+
+## 0310 Layout & Responsive design
+
+### Basic Layout
+
+Layout components
+
+- Box : Similar to <div>
+- Container : Similar to Box, but content is positioned to the center
+- Grid : 2-dimentional layouts
+- Stack : 1-dimentional layouts : direction="column" or row
+
+> **Material UI default breakpoints**
+
+    - xs, extra-small: 0px
+    - sm, small: 600px
+    - md, medium: 900px
+    - lg, large: 1200px
+    - xl, extra-large: 1536px
+
+Basic layout example
+
+```javascript
+// [src/App.js] ----------
+
+...
+
+function App() {
+  return (
+    <Box>
+      <Navbar />
+      <Stack direction={"row"}>
+        <Sidebar />
+        <Feed />
+        <Rightbar />
+      </Stack>
+    </Box>
+  );
+}
+
+export default App;
+
+// [components/Navbar.js] ----------
+...
+
+const Navbar = () => {
+  return <Box sx={{ background: "yellow", padding: 2 }}>Navbar</Box>;
+};
+
+export default Navbar;
+
+// [components/Sidebar.js] ----------
+...
+
+const Sidebar = () => {
+  return (
+    <Box
+      sx={{
+        background: "tomato",
+        flex: 1,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      Sidebar
+    </Box>
+  );
+};
+
+export default Sidebar;
+
+// [components/Feed.js] ----------
+...
+
+const Feed = () => {
+  return <Box sx={{ background: "cyan", flex: 4, padding: 2 }}>Feed</Box>;
+};
+
+export default Feed;
+
+// [components/Rightbar.js] ----------
+...
+
+const Rightbar = () => {
+  return (
+    <Box
+      sx={{
+        background: "yellowgreen",
+        flex: 2,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      Rightbar
+    </Box>
+  );
+};
+
+export default Rightbar;
+```
+
+Upper UI outlook  
+![Basic layout with stack component](./images_forMD/basic-layout-with-stack.PNG)
+
+### Basic Layout : Appbar
+
+Appbar with search box, notications, and user
+
+```javascript
+...
+
+const StyledToolbar = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "space-between",
+});
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  margin: "0 16px",
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+// Search section
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
+
+const Navbar = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const handleProfileMenuOpen = (event) => {setAnchorEl(event.currentTarget);};
+  const handleMobileMenuClose = () => {setMobileMoreAnchorEl(null);};
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      sx={{ marginTop: "32px" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      sx={{ marginTop: "32px" }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <Mail />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <Notifications />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+  return (
+    <AppBar position="sticky">
+      <StyledToolbar>
+        <Box>
+          <Typography
+            variant="h5"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            Jeff Dev
+          </Typography>
+          <Layers
+            sx={{
+              display: { xs: "block", sm: "none" },
+              fontSize: "2rem",
+            }}
+          />
+        </Box>
+        <Box>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+        </Box>
+        <Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="error">
+                <Mail />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <Avatar alt="Remy Sharp" src="/user-png-64.png" />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" }, marginLeft: "16px" }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </Box>
+        </Box>
+      </StyledToolbar>
+      {renderMobileMenu}
+      {renderMenu}
+    </AppBar>
+  );
+};
+
+export default Navbar;
+```
+
+Upper UI outlook
+
+![Appbar with search, notification and user](./images_forMD/appbar.PNG)
+
+### Basic Layout : Navbar(Sidebar)
+
+Navbar with List and ListItems
+
+```javascript
+...
+import { Home, Article, Group, Storefront, People, Settings, AccountBox, ModeNight } from "@mui/icons-material";
+
+const Sidebar = () => {
+  return (
+    <Box
+      sx={{
+        // background: "tomato",
+        flex: 1,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Article />
+            </ListItemIcon>
+            <ListItemText primary="Pages" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary="Groups" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Storefront />
+            </ListItemIcon>
+            <ListItemText primary="Marketplace" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <People />
+            </ListItemIcon>
+            <ListItemText primary="Friends" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <AccountBox />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ModeNight />
+            </ListItemIcon>
+            <Switch defaultChecked />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+};
+
+export default Sidebar;
+```
+
+Upper UI outlook
+
+![Appbar with search, notification and user](./images_forMD/navbar-sidebar.png)
+
+### Overall UI
+
+Overall UI
+
+![Overall UI](./images_forMD/Overall-UI.PNG)
+
+Dark Mode
+
+![dark mode](./images_forMD/Overall-UI-markMode.PNG)
+
+Modal
+
+![modal](./images_forMD/Overall-UI-modal.PNG)
 
 ## Reference
 

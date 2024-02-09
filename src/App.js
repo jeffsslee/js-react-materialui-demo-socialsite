@@ -1,29 +1,31 @@
-import { Box, styled } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box, Stack, ThemeProvider, createTheme } from "@mui/material";
+import Sidebar from "./components/Sidebar";
+import Feed from "./components/Feed";
+import Rightbar from "./components/Rightbar";
+import Navbar from "./components/Navbar";
+import Add from "./components/Add";
+import { useState } from "react";
 
 function App() {
-  const MyButton = styled(Button)({
-    background: "tomato",
-    color: "yellowgreen",
-    margin: 2, // 2 * 8px = 16px
-    "&:hover": {
-      background: "orange",
-    },
-    "&:disabled": {
-      background: "grey",
-      color: "#111",
+  const [mode, setMode] = useState("dark");
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: mode,
     },
   });
   return (
-    <Box>
-      <Button variant="contained" color="primary">
-        primary
-      </Button>
-      <MyButton variant="contained">My button</MyButton>
-      <MyButton variant="contained" disabled>
-        My button
-      </MyButton>
-    </Box>
+    <ThemeProvider theme={darkTheme}>
+      <Box bgcolor={"background.default"} color={"text.primary"}>
+        <Navbar />
+        <Stack direction={"row"}>
+          <Sidebar mode={mode} setMode={setMode} />
+          <Feed />
+          <Rightbar />
+        </Stack>
+        <Add />
+      </Box>
+    </ThemeProvider>
   );
 }
 
