@@ -169,86 +169,82 @@ const Navbar = () => {
     </Menu>
   );
   return (
-    <Box>
-      <AppBar position="sticky">
-        <StyledToolbar>
-          <Box>
-            <Typography
-              variant="h5"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Jeff Dev
-            </Typography>
-            <Layers
-              sx={{
-                display: { xs: "block", sm: "none" },
-                fontSize: "2rem",
-              }}
+    <AppBar position="sticky">
+      <StyledToolbar>
+        <Box>
+          <Typography
+            variant="h5"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            Jeff Dev
+          </Typography>
+          <Layers
+            sx={{
+              display: { xs: "block", sm: "none" },
+              fontSize: "2rem",
+            }}
+          />
+        </Box>
+        <Box>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
             />
-          </Box>
-          <Box>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          </Box>
-          <Box>
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <Badge badgeContent={4} color="error">
-                  <Mail />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <Notifications />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Avatar alt="Remy Sharp" src="/user-png-64.png" />
-              </IconButton>
-            </Box>
-            <Box
-              sx={{ display: { xs: "flex", md: "none" }, marginLeft: "16px" }}
+          </Search>
+        </Box>
+        <Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
             >
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MenuIcon sx={{ fontSize: "2rem" }} />
-              </IconButton>
-            </Box>
+              <Badge badgeContent={4} color="error">
+                <Mail />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <Avatar alt="Remy Sharp" src="/user-png-64.png" />
+            </IconButton>
           </Box>
-        </StyledToolbar>
-      </AppBar>
+          <Box sx={{ display: { xs: "flex", md: "none" }, marginLeft: "16px" }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </Box>
+        </Box>
+      </StyledToolbar>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+    </AppBar>
   );
 };
 
