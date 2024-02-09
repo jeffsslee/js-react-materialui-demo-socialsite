@@ -1,70 +1,751 @@
-# Getting Started with Create React App
+# Social-media demo with Material UI & React JS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Social Media Demo App with Material UI and React JS
 
-## Available Scripts
+## 0110 Project Setup
 
-In the project directory, you can run:
+### Inital Setup
 
-### `npm start`
+To create React app  
+To setup Material UI with icons
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+// React
+npx create-react-app .
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+// Material UI
+npm install @mui/material @emotion/react @emotion/styled
 
-### `npm test`
+// Material UI Icons
+npm install @mui/icons-material
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To setup Roboto font
 
-### `npm run build`
+```javascript
+// [public/index.html]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700&display=swap"
+/>
+<style>
+  * {
+    margin: 0;
+    font-family: "Roboto", serif;
+  }
+</style>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Project Inital Cleanup
 
-### `npm run eject`
+To delete redandancy or unnecessary files
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+// Delete files except the followings
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+public  / index.html
+src     / App.js
+          index.css
+          index.js
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> Folder strcture after cleanup  
+> ![siple folder structure](./images_forMD/simple-folder-structure.PNG)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To edit files with only necessary contents
 
-## Learn More
+```javascript
+// [public/index.html]
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700&display=swap"
+    />
+    <style>
+      * {
+        margin: 0;
+        font-family: "Roboto", serif;
+      }
+    </style>
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+// [src/App.js]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+function App() {
+  return <div>App</div>;
+}
 
-### Analyzing the Bundle Size
+export default App;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+// [src/index.js]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 
-### Advanced Configuration
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+// [src.index.css]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
 
-### `npm run build` fails to minify
+## 0210 Material UI Basic Intro
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Component source (from)
+
+When you import Meterial components, most of them are from <b><span style="color:orange">@mui/material</span></b>.
+
+### sx (prop)
+
+sx is a prop of Material UI components.  
+In sx, you may write the CSS directly.
+
+```javascript
+// Careful : import from "@mui/material"
+
+import { Box, Button } from "@mui/material";
+
+function App() {
+  return (
+    <Box>
+      <Button
+        variant="contained"
+        sx={{
+          background: "tomato",
+          color: "yellowgreen",
+          margin: 2, // 2 * 8px = 16px
+          "&:hover": {
+            background: "orange",
+          },
+          "&:disabled": {
+            background: "grey",
+            color: "#111",
+          },
+        }}
+      >
+        My button
+      </Button>
+    </Box>
+  );
+}
+
+export default App;
+```
+
+> \* **In css**
+
+```
+.classA.classB => <div class="classA, classB">~~</div>
+.classA .classB => <div class="classA"><div class="classB">~~</div><div>
+```
+
+> \* **& of scss**  
+>  & : parent selector of scss
+
+```javascript
+// scss
+.button {
+  &:visited { }
+  &:hover { }
+  &:active { }
+}
+
+// css compiled from upper scss
+  .button:visited { }
+  .button:hover { }
+  .button:active { }
+```
+
+### Custom component
+
+styled() method(from "@mui/material") can custimize components.
+
+```javascript
+import { Box, Button, styled } from "@mui/material";
+
+function App() {
+  const MyButton = styled(Button)({
+    background: "tomato",
+    color: "yellowgreen",
+    margin: 2, // 2 * 8px = 16px
+    "&:hover": {
+      background: "orange",
+    },
+    "&:disabled": {
+      background: "grey",
+      color: "#111",
+    },
+  });
+  return (
+    <Box>
+      <MyButton variant="contained">My button</MyButton>
+      <MyButton variant="contained" disabled>
+        My button
+      </MyButton>
+    </Box>
+  );
+}
+
+export default App;
+```
+
+### Custom theme
+
+Default Theme of Material UI
+
+> https://mui.com/material-ui/customization/default-theme/
+
+To customize theme
+
+- To defined a customized theme in theme.js
+- To apply the theme in root side file such as index.js
+
+```javascript
+// [src/theme.js]
+
+import { createTheme } from "@mui/material";
+...
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#d50000",
+      light: "skyblue",
+    },
+    secondary: {
+      main: "#15c630",
+    },
+    otherColor: {
+      main: "#a1a1a1",
+    },
+  },
+});
+
+// {src/index.js}
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./theme";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
+```
+
+You may apply the theme in the customized component.
+
+```javascript
+import { Box, styled } from "@mui/material";
+import Button from "@mui/material/Button";
+import { theme } from "./theme";
+
+function App() {
+  const MyButton = styled(Button)(({ theme }) => ({
+    background: theme.palette.otherColor.main,
+    color: "yellowgreen",
+    margin: 2, // 2 * 8px = 16px
+    "&:hover": {
+      background: "orange",
+    },
+    "&:disabled": {
+      background: "grey",
+      color: "#111",
+    },
+  }));
+  return (
+    ...
+  );
+}
+
+export default App;
+
+```
+
+## 0310 Layout & Responsive design
+
+### Basic Layout
+
+Layout components
+
+- Box : Similar to <div>
+- Container : Similar to Box, but content is positioned to the center
+- Grid : 2-dimentional layouts
+- Stack : 1-dimentional layouts : direction="column" or row
+
+> **Material UI default breakpoints**
+
+    - xs, extra-small: 0px
+    - sm, small: 600px
+    - md, medium: 900px
+    - lg, large: 1200px
+    - xl, extra-large: 1536px
+
+Basic layout example
+
+```javascript
+// [src/App.js] ----------
+
+...
+
+function App() {
+  return (
+    <Box>
+      <Navbar />
+      <Stack direction={"row"}>
+        <Sidebar />
+        <Feed />
+        <Rightbar />
+      </Stack>
+    </Box>
+  );
+}
+
+export default App;
+
+// [components/Navbar.js] ----------
+...
+
+const Navbar = () => {
+  return <Box sx={{ background: "yellow", padding: 2 }}>Navbar</Box>;
+};
+
+export default Navbar;
+
+// [components/Sidebar.js] ----------
+...
+
+const Sidebar = () => {
+  return (
+    <Box
+      sx={{
+        background: "tomato",
+        flex: 1,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      Sidebar
+    </Box>
+  );
+};
+
+export default Sidebar;
+
+// [components/Feed.js] ----------
+...
+
+const Feed = () => {
+  return <Box sx={{ background: "cyan", flex: 4, padding: 2 }}>Feed</Box>;
+};
+
+export default Feed;
+
+// [components/Rightbar.js] ----------
+...
+
+const Rightbar = () => {
+  return (
+    <Box
+      sx={{
+        background: "yellowgreen",
+        flex: 2,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      Rightbar
+    </Box>
+  );
+};
+
+export default Rightbar;
+```
+
+Upper UI outlook  
+![Basic layout with stack component](./images_forMD/basic-layout-with-stack.PNG)
+
+### Basic Layout : Appbar
+
+Appbar with search box, notications, and user
+
+```javascript
+...
+
+const StyledToolbar = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "space-between",
+});
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  margin: "0 16px",
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+// Search section
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
+
+const Navbar = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const handleProfileMenuOpen = (event) => {setAnchorEl(event.currentTarget);};
+  const handleMobileMenuClose = () => {setMobileMoreAnchorEl(null);};
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      sx={{ marginTop: "32px" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      sx={{ marginTop: "32px" }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <Mail />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <Notifications />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+  return (
+    <AppBar position="sticky">
+      <StyledToolbar>
+        <Box>
+          <Typography
+            variant="h5"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            Jeff Dev
+          </Typography>
+          <Layers
+            sx={{
+              display: { xs: "block", sm: "none" },
+              fontSize: "2rem",
+            }}
+          />
+        </Box>
+        <Box>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+        </Box>
+        <Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="error">
+                <Mail />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <Avatar alt="Remy Sharp" src="/user-png-64.png" />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" }, marginLeft: "16px" }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </Box>
+        </Box>
+      </StyledToolbar>
+      {renderMobileMenu}
+      {renderMenu}
+    </AppBar>
+  );
+};
+
+export default Navbar;
+```
+
+Upper UI outlook
+
+![Appbar with search, notification and user](./images_forMD/appbar.PNG)
+
+### Basic Layout : Navbar(Sidebar)
+
+Navbar with List and ListItems
+
+```javascript
+...
+import { Home, Article, Group, Storefront, People, Settings, AccountBox, ModeNight } from "@mui/icons-material";
+
+const Sidebar = () => {
+  return (
+    <Box
+      sx={{
+        // background: "tomato",
+        flex: 1,
+        display: { xs: "none", sm: "block" },
+        padding: 2,
+      }}
+    >
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Article />
+            </ListItemIcon>
+            <ListItemText primary="Pages" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary="Groups" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Storefront />
+            </ListItemIcon>
+            <ListItemText primary="Marketplace" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <People />
+            </ListItemIcon>
+            <ListItemText primary="Friends" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <AccountBox />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ModeNight />
+            </ListItemIcon>
+            <Switch defaultChecked />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+};
+
+export default Sidebar;
+```
+
+Upper UI outlook
+
+![Appbar with search, notification and user](./images_forMD/navbar-sidebar.png)
+
+### Overall UI
+
+Overall UI
+
+![Overall UI](./images_forMD/Overall-UI.PNG)
+
+Dark Mode
+
+![dark mode](./images_forMD/Overall-UI-markMode.PNG)
+
+Modal
+
+![modal](./images_forMD/Overall-UI-modal.PNG)
+
+## Reference
+
+Lama Dev  
+https://www.youtube.com/watch?app=desktop&v=fzxEECHnsvU
